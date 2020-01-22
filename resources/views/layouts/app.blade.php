@@ -51,6 +51,10 @@
                         </div>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/threads/create">New Thread</a>
+                    </li>
+
                 </ul>
 
                 <!-- Right Side Of Navbar -->

@@ -26,8 +26,6 @@ class ThreadsController extends Controller
     {
         if ($channel->exists) {
             $threads = $channel->threads()->latest()->get();
-//            $channelId = Channel::whereSlug($channelSlug)->first()->id;
-//            $threads= Thread::where('channel_id', $channelId)->latest()->get();
         } else {
             $threads= Thread::latest()->get();
         }

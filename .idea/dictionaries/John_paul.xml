@@ -2,6 +2,8 @@
   <dictionary name="John paul">
     <words>
       <w>bcrypt</w>
+      <w>navbar</w>
+      <w>toggler</w>
     </words>
   </dictionary>
 </component>
