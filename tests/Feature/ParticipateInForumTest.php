@@ -35,7 +35,7 @@ class ParticipateInForumTest extends TestCase
     }
 
     /** @test */
-    public function a_reply_requires_a_body()
+    public function a_reply_requires_a_body() : void
     {
         $this->withExceptionHandling()->signIn();
         $thread = create(Thread::class);
