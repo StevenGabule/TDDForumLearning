@@ -13,16 +13,17 @@ class ParticipateInForumTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @test*/
-    public function unauthenticated_users_may_not_add_replies()
+    /** @test */
+    public function unauthenticated_users_may_not_add_replies(): void
     {
-        $this->expectException(AuthenticationException::class);
-        $this->post('/threads/1/replies', []);
-
+//        $this->expectException(AuthenticationException::class);
+        $this->withExceptionHandling()
+            ->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 
-    /** @test*/
-    public function an_authenticated_user_may_participate_in_forum_threads()
+    /** @test */
+    public function an_authenticated_user_may_participate_in_forum_threads(): void
     {
         $this->be($user = create(User::class));
         $thread = create(Thread::class);

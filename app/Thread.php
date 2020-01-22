@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Thread extends Model
 {
@@ -10,7 +11,7 @@ class Thread extends Model
 
     public function path()
     {
-        return "/threads/$this->id";
+        return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
     public function replies()
@@ -26,5 +27,10 @@ class Thread extends Model
     public function addReply($reply)
     {
         $this->replies()->create($reply);
+    }
+
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(Channel::class);
     }
 }
