@@ -7,7 +7,6 @@ use App\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Illuminate\Auth\AuthenticationException;
 
 class ParticipateInForumTest extends TestCase
 {
@@ -16,7 +15,6 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function unauthenticated_users_may_not_add_replies(): void
     {
-//        $this->expectException(AuthenticationException::class);
         $this->withExceptionHandling()
             ->post('/threads/some-channel/1/replies', [])
             ->assertRedirect('/login');
@@ -34,5 +32,14 @@ class ParticipateInForumTest extends TestCase
 
         // then their reply should be visible on the page
         $this->get($thread->path())->assertSee($reply->body);
+    }
+
+    /** @test */
+    public function a_reply_requires_a_body()
+    {
+        $this->withExceptionHandling()->signIn();
+        $thread = create(Thread::class);
+        $reply = make(Reply::class, ['body' => null]);
+        $this->post($thread->path() . '/replies', $reply->toArray())->assertSessionHasErrors('body');
     }
 }
