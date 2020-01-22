@@ -5,9 +5,9 @@ namespace Tests\Feature;
 use App\Reply;
 use App\Thread;
 use App\User;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Illuminate\Auth\AuthenticationException;
 
 class ParticipateInForumTest extends TestCase
 {
@@ -16,7 +16,7 @@ class ParticipateInForumTest extends TestCase
     /** @test*/
     public function unauthenticated_users_may_not_add_replies()
     {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectException(AuthenticationException::class);
         $this->post('/threads/1/replies', []);
 
     }
@@ -24,11 +24,11 @@ class ParticipateInForumTest extends TestCase
     /** @test*/
     public function an_authenticated_user_may_participate_in_forum_threads()
     {
-        $this->be($user = factory(User::class)->create());
-        $thread = factory(Thread::class)->create();
+        $this->be($user = create(User::class));
+        $thread = create(Thread::class);
 
         // when the user adds a reply to the thread
-        $reply = factory(Reply::class)->make();
+        $reply = make(Reply::class);
         $this->post($thread->path() . '/replies', $reply->toArray());
 
         // then their reply should be visible on the page
